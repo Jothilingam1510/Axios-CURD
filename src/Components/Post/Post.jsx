@@ -14,16 +14,14 @@ const [post, setPost]= useState({
   title:'',
   content:''
 });
-useEffect(()=>{
-  if(id === 'new') return;
-
-  const fetchPost =async()=>{
-    const{data} = await axios.get(`${API_URL}/${id}`);
-    setPost(data);
+useEffect(() => {
+  if( id ==="new") return;
+  const fetchPost =async () => {
+    const {data} = await axios.get(`${API_URL}/${id}`);
+    setPost(data)
   };
   fetchPost();
-}, [id])
-console.log(post)
+},[id])
 
 const handleChange =(e) =>{
   const postClone = {...post};
@@ -32,9 +30,7 @@ const handleChange =(e) =>{
 }
 
 
-const handleSubmit = async (e) =>{
-  e.preventDefault();
-
+const handleSubmit = async () =>{
 try {
   if(id === 'new'){
     axios.post(API_URL,post);

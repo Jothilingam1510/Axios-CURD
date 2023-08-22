@@ -9,19 +9,21 @@ import { useNavigate } from 'react-router-dom';
 const Posts = () => {
   const navigate = useNavigate();
   const [posts,setPosts]=useState([]);
+  
 
+
+  const fetchPosts =async()=>{
+    const {data} =await axios.get(API_URL);
+    setPosts(data);
+  };
   useEffect(() => {
-    const fetchPosts =async()=>{
-      const {data} =await axios.get(API_URL);
-      setPosts(data);
-    };
     fetchPosts();
 
   },[]);
 
   const deleteUser = async (id) =>{
-    console.log(API_URL)
     await axios.delete(API_URL + id)
+    fetchPosts();
   }
 
 
@@ -45,7 +47,8 @@ const Posts = () => {
           <tr key={post.id}>
             <td>{post.title}</td>
             <td>{post.content}</td>
-            <td><button  
+            <td>
+              <button  
            onClick={()=> navigate(`/post/${post.id}`)}
             className="btn btn-primary">Update</button></td>
             <td><button  
