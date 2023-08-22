@@ -6,6 +6,7 @@ import axios from 'axios';
 
 const Post = () => {
 
+
 const navigate = useNavigate();
 
 
@@ -14,6 +15,8 @@ const [post, setPost]= useState({
   title:'',
   content:''
 });
+
+
 useEffect(() => {
   if( id ==="new") return;
   const fetchPost =async () => {
@@ -30,18 +33,21 @@ const handleChange =(e) =>{
 }
 
 
-const handleSubmit = async () =>{
+const handleSubmit = async (e) =>{
+  e.preventDefault();
 try {
   if(id === 'new'){
-    axios.post(API_URL,post);
-    return navigate('/')
+    axios.post(API_URL,post).then(()=>navigate('/'));
+    // return navigate('/')
+    
   }else{
-    axios.put(API_URL + '/' + id,post);
-    return navigate('/')
+    axios.put(API_URL + '/' + id,post).then(()=>navigate('/'));
+    // return navigate('/')
 }
 } catch (error) {
   console.log(error)
 }
+
 
 };
   return (
@@ -50,8 +56,9 @@ try {
       <form className='post'>
         <input type='text' placeholder='title...' name='title' value={post.title} onChange={handleChange}/>
         <input type='text' placeholder='content...' name='content' value={post.content} onChange={handleChange}/>  
-        <button onClick={handleSubmit} className='btn btn-primary'>
+        <button  onClick={handleSubmit} className='btn btn-primary'>
           {id === 'new'? 'Post':"Update"}</button>
+         
       </form>   
     </div>
     </div>
